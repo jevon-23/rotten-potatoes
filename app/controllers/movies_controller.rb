@@ -24,12 +24,17 @@ class MoviesController < ApplicationController
 
       # Begin to set up variables to be sent to the view
       @all_ratings = Movie.get_all_ratings()
+      @sort = is_sort
+      @title_class = 'link'
+      @release_class = 'link'
       if is_sort == 'title'
 	      @ratings_to_show = Movie.ratings_to_show(is_sort_ratings)
 	      @movies = Movie.sort_movies_title(is_sort_ratings)
+	      @title_class = 'p-3 mb-2 bg-warning'
       elsif is_sort == 'release'
 	      @ratings_to_show = Movie.ratings_to_show(is_sort_ratings)
 	      @movies = Movie.sort_movies_release_date(is_sort_ratings)
+	      @release_class = 'p-3 mb-2 bg-warning'
       else
       	      @ratings_to_show = Movie.ratings_to_show(chosen_ratings)
       	      @movies = Movie.with_ratings(@ratings_to_show)
