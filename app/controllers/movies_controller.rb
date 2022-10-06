@@ -8,13 +8,23 @@ class MoviesController < ApplicationController
   
     def index
       chosen_ratings = params[:ratings]
+      is_sort = params[:sort]
+      is_sort_ratings = params[:sort_ratings]
+
       @all_ratings = Movie.get_all_ratings()
-      @ratings_to_show = Movie.ratings_to_show(chosen_ratings)
-      @movies = Movie.with_ratings(@ratings_to_show)
+
+      if is_sort == 'title'
+	      @ratings_to_show = Movie.ratings_to_show(is_sort_ratings)
+	      @movies = Movie.sort_movies_title(is_sort_ratings)
+      elsif is_sort == 'release'
+	      print "is_sort_ratings: #{is_sort_ratings}"
+	      @ratings_to_show = Movie.ratings_to_show(is_sort_ratings)
+	      @movies = Movie.sort_movies_release_date(is_sort_ratings)
+      else
+      	      @ratings_to_show = Movie.ratings_to_show(chosen_ratings)
+      	      @movies = Movie.with_ratings(@ratings_to_show)
+      end
       # @movies = Movie.all
-
-
-
     end
   
     def new
