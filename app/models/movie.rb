@@ -37,14 +37,11 @@ class Movie < ActiveRecord::Base
 		if ratings == nil
 			return Movie.order(:release_date)
 		end
-		print "Move.order: #{Movie.order(:release_date)}"
 		ordered = Movie.order(:release_date)
 		movies = []
 		ratings.keys.each do |rate|
 			movies += where("rating = '#{rate}'").order(:release_date)
 		end
-		print "movies : #{movies}"
 		return movies.sort_by {|movie| movie.release_date} 
-		# return Movie.order(:release_date)
 	end
 end
